@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name ="contactos")
 public class contactos {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idContacto;
 	@Column(name = "nombre", nullable = false, length = 100)
 	private String nombre;
@@ -19,7 +19,7 @@ public class contactos {
 	private String paterno;
 	@Column(name = "materno", nullable = false, length = 100)
 	private String materno;
-	@Column(name = "nombre_buscar", nullable = false, length = 200)
+	@Column(name = "nombre_buscar", length = 200)
 	private String nombre_buscar;
 	@Column(name = "activo", nullable = false)
 	private Integer activo;
@@ -27,7 +27,7 @@ public class contactos {
 	private String email;
 	@Column(name = "fechaCreacion", nullable = false, length = 100)
 	private String fechaCreacion;
-	@Column(name = "fechaActualizacion", nullable = false, length = 100)
+	@Column(name = "fechaActualizacion", length = 100)
 	private String fechaActualizacion;
 	
 	public Long getIdContacto() {

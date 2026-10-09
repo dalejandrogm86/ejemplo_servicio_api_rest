@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,12 +102,27 @@ public class contactosController {
 		}
 	}
 	
-	@PutMapping("/actualiza")
+	@PutMapping("/actualizar")
+	public ResponseEntity<contactos> actualizar(@RequestBody contactos t){
+		try {			
+			Optional<contactos> data;
+			t.setActivo(0);
+			data = Optional.of(tipoNumeroService.actualizar(t));
+			if(data.isPresent()) {
+				return new ResponseEntity<>(data.get(), HttpStatus.OK);
+			}else {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@PostMapping("/guardar")
 	public ResponseEntity<contactos> guardar(@RequestBody contactos t){
 		try {			
 			Optional<contactos> data;
 			t.setActivo(0);
-			data = Optional.of(tipoNumeroService.delete(t));
+			data = Optional.of(tipoNumeroService.guardar(t));
 			if(data.isPresent()) {
 				return new ResponseEntity<>(data.get(), HttpStatus.OK);
 			}else {

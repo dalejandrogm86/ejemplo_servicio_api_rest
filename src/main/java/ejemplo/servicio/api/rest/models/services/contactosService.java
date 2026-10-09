@@ -10,5 +10,7 @@ public interface contactosService {
 	public List<contactos> findByDescripcion(contactos a);
 	public List<contactos> findByNames(String a);
 	public contactos delete(contactos c);
+	public contactos guardar(contactos c);
+	public contactos actualizar(contactos c);
 	
 }

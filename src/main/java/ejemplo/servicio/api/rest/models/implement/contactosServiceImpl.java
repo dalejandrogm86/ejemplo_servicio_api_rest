@@ -6,6 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import ejemplo.servicio.api.rest.models.dao.contactosDao;
 import ejemplo.servicio.api.rest.models.entity.contactos;
 import ejemplo.servicio.api.rest.models.services.contactosService;
@@ -80,9 +87,10 @@ public class contactosServiceImpl implements contactosService{
 	public contactos delete(contactos c) {
 		contactos data=null;
 		try {
-			System.out.println(c.getNombre());
-			System.out.println(c.getActivo());
-			data = concatosdao.save(c);
+			contactos contactoBorrado = new contactos();
+			contactoBorrado.setActivo(0);
+			contactoBorrado.setFechaActualizacion(this.hoy());
+			data = concatosdao.save(contactoBorrado);
 			if(data.equals(null)) {
 				System.out.println("No se localizo el contacto en el sistema");
 			}
@@ -92,7 +100,51 @@ public class contactosServiceImpl implements contactosService{
 		}
 		return data;
 	}
+	@Override
+	public contactos guardar(contactos c) {
+		contactos data=null;
+		try {
+			c.setActivo(1);
+			c.setFechaCreacion(this.hoy());
+			c.setNombre_buscar(c.getNombre_buscar() + " " + c.getPaterno() + " " + c.getMaterno());
+			data = concatosdao.save(c);
+			if(data.equals(null)) {
+				System.out.println("el registro se guardo de forma correcta");
+			}
+			return data;
+		}catch (Exception e) {
+			System.err.println("Ocurrio un error al realizar la consulta por clave " + e.getMessage());
+		}
+		return data;
+	}
+	@Override
+	public contactos actualizar(contactos c) {
+		contactos data=null;
+		try {
+			c.setActivo(1);
+			c.setFechaActualizacion(this.hoy());
+			c.setNombre_buscar(c.getNombre_buscar() + " " + c.getPaterno() + " " + c.getMaterno());
+			data = concatosdao.save(c);
+			if(data.equals(null)) {
+				System.out.println("el registro se guardo de forma correcta");
+			}
+			return data;
+		}catch (Exception e) {
+			System.err.println("Ocurrio un error al realizar la consulta por clave " + e.getMessage());
+		}
+		return data;
+	}
 	
+	private String hoy() {
+        LocalDate fechaActual = LocalDate.now();
+        LocalTime horaActual = LocalTime.now();
+        LocalDateTime fechaHoraActual = LocalDateTime.now();
+        ZonedDateTime fechaHoraConZona = ZonedDateTime.now(ZoneId.of("America/Mexico_City"));
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String fechaFormateada = fechaHoraActual.format(formato);
+
+        return fechaFormateada;
+	}
 	
 
 }
