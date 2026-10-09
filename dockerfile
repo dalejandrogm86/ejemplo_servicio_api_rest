@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/ejemplo_servicio_api_rest-0.0.1-SNAPSHOT.jar app.jar
 
 # 4. Exponer el puerto por defecto de Spring Boot
-EXPOSE 8080
+EXPOSE 8088
 
 # 5. Comando para arrancar la API REST
 ENTRYPOINT ["java", "-jar", "app.jar"]
