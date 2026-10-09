@@ -56,7 +56,7 @@ public class contactosServiceImpl implements contactosService{
 		List<contactos> data=null;
 		try {
 			if( t.getActivo()!=null ) {
-				data = concatosdao.findByDescripcion(t.getNombre_buscar(),t.getActivo());
+				data = concatosdao.findByDescripcion(t.getNombre_buscar());
 			}else {
 				data = concatosdao.findByDescripcion(t.getNombre_buscar());
 			}

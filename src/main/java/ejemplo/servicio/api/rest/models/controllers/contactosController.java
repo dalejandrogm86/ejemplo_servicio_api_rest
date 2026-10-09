@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ejemplo.servicio.api.rest.models.entity.contactos;
-import ejemplo.servicio.api.rest.models.services.contactosService;
+import ejemplo.servicio.api.rest.models.implement.contactosServiceImpl;
 
 @RestController
 @RequestMapping("/agenda/contactos")
 public class contactosController {
 	
 	@Autowired
-	private contactosService tipoNumeroService;
+	private contactosServiceImpl tipoNumeroService;
 	
 	@GetMapping("/getList")
 	public ResponseEntity<List<contactos>> listar(){
@@ -54,10 +54,10 @@ public class contactosController {
 	}
 	
 	@GetMapping("/contactos/{idContacto}")
-	public ResponseEntity<contactos> listar(@PathVariable Long idContacto){
+	public ResponseEntity<contactos> listarlos(@PathVariable Long idContacto){
 		try {
 			Optional<contactos> data;
-			data = Optional.of(tipoNumeroService.(idContacto));
+			data = Optional.of(tipoNumeroService.findById(idContacto));
 			if(data.isPresent()) {
 				return new ResponseEntity<>(data.get(), HttpStatus.OK);
 			}else {
